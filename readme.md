@@ -14,7 +14,7 @@ Why? Not all huds support those counters and prefer to only use the overlay map.
 
 Dev
 ---
-1. Compile *.c files with ACC
+1. Compile `*.c` files with ACC
 2. Package up all txt files and acc files to a zip
 3. Rename zip to .pk3
 4. Use like any doom addon
@@ -22,3 +22,8 @@ Dev
 #### Misc
 * Compiled with ACC 1.56 win
 * Tested with GZDoom 3.2.1 and Zandorum 3.0
+
+Changelog
+---------
+##### v1.0.0
+* Initial version
