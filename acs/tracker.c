@@ -1,17 +1,14 @@
 #library "tracker"
 #include "zcommon.acs"
-
-int showSecretCount = 1;
-int showItemCount = 1;
-int showMonsterCount = 1;
-int colorCompleteCounts = 1; // Color counts differently when complete
-
-int showTime = 1;
-int showParTime = 1;
-int colorTimeForPar = 1; // Color the time according to how close it is to par
-
-int showLevel = 1;
-
+#define HIDE_TRACKER_CVAR "tr_hide_all"
+#define SHOW_SECRET_CVAR "tr_show_secret"
+#define SHOW_ITEM_CVAR "tr_show_item"
+#define SHOW_MONSTER_CVAR "tr_show_monster"
+#define COLOR_COUNTS_CVAR "tr_color_counts" // Color counts differently when complete
+#define SHOW_TIME_CVAR "tr_show_time"
+#define SHOW_PAR_TIME_CVAR "tr_show_par_time"
+#define COLOR_TIME_CVAR "tr_color_time" // Color the time according to how close it is to par
+#define SHOW_LEVEL_CVAR "tr_show_level"
 
 
 function int pad(int time) {
@@ -67,57 +64,60 @@ script 400 ENTER clientside
   while(true) {
     int countColor = 0;
     int fullMessage = "";
-    if(showSecretCount) {
+    if(getCVar(SHOW_SECRET_CVAR)) {
       int ts = GetLevelInfo(LEVELINFO_TOTAL_SECRETS);
       int fs = GetLevelInfo(LEVELINFO_FOUND_SECRETS);
       countColor = dataColor;
-      if(colorCompleteCounts && fs >= ts) {
+      if(GetCVar(COLOR_COUNTS_CVAR) && fs >= ts) {
         countColor = completeColor;
       }
       int secretMsg = StrParam(s:"\c", s:tagColor, s:"s: \t\t", s:"\c", s:countColor, d:fs, s:"/", d:ts);
       fullMessage = StrParam(s:fullMessage, s:secretMsg, s:"\n");
     }
-    if(showItemCount) {
+    if(getCVar(SHOW_ITEM_CVAR)) {
       int ti = GetLevelInfo(LEVELINFO_TOTAL_ITEMS);
       int fi = GetLevelInfo(LEVELINFO_FOUND_ITEMS);
       countColor = dataColor;
-      if(colorCompleteCounts && fi >= ti) {
+      if(GetCVar(COLOR_COUNTS_CVAR) && fi >= ti) {
         countColor = completeColor;
       }
       fullMessage = StrParam(s:fullMessage, s:"\c", s:tagColor, s:"i: \t\t\t", s:"\c", s:countColor, d:fi, s:"/", d:ti, s:"\n");
     }
-    if(showMonsterCount) {
+    if(getCVar(SHOW_MONSTER_CVAR)) {
       int tm = GetLevelInfo(LEVELINFO_TOTAL_MONSTERS);
       int km = GetLevelInfo(LEVELINFO_KILLED_MONSTERS);
       countColor = dataColor;
-      if(colorCompleteCounts && km >= tm) {
+      if(GetCVar(COLOR_COUNTS_CVAR) && km >= tm) {
         countColor = completeColor;
       }
       fullMessage = StrParam(s:fullMessage, s:"\c", s:tagColor, s:"k: \t\t", s:"\c", s:countColor, d:km, s:"/", d:tm, s:"\n");
     }
-    if(showTime) {
+    if(getCVar(SHOW_TIME_CVAR)) {
       int time = Timer()/35;
       int par = GetLevelInfo(LEVELINFO_PAR_TIME);
       int timeTag = "t: ";
       int timeStr = StrParam(s:timeToStr(time));
       int parStr = StrParam(s:timeToStr(par));
       int col = dataColor;
-      if(colorTimeForPar) {
+      if(getCVar(COLOR_TIME_CVAR)) {
         col = timeColor(time, par);  
       }
 
       fullMessage = StrParam(s:fullMessage, s:"\c", s:tagColor, s:"t: \t\t", s:"\c", s:col, s:timeStr, s:"\n");
 
-      if(showParTime) {
+      if(getCVar(SHOW_PAR_TIME_CVAR)) {
         fullMessage = StrParam(s:fullMessage, s:"\t\t\t\t\t\t", s:"\cj", s:parStr, s:"\n");
       }
     }
-    if(showLevel) {
+    if(getCVar(SHOW_LEVEL_CVAR)) {
 
       fullMessage = StrParam(s:fullMessage, s:"\cu", n:PRINTNAME_LEVEL, s:"\n");
       fullMessage = StrParam(s:fullMessage, s:"\cc", n:PRINTNAME_LEVELNAME, s:"\n");
     }
-    HudMessage(l:fullMessage; HUDMSG_PLAIN | HUDMSG_NOTWITHFULLMAP, 400, CR_WHITE, 1.0, 0.0, 1873);
+
+    if(!getCVar(HIDE_TRACKER_CVAR)) {
+      HudMessage(l:fullMessage; HUDMSG_PLAIN | HUDMSG_NOTWITHFULLMAP, 400, CR_WHITE, 1.0, 0.0, 1873);  
+    }
     Delay(1);
   }
 }

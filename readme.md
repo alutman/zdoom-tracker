@@ -1,16 +1,15 @@
 tracker
 =======
+For ZDoom ports.
 
 Provides a kill/secrets/items counter in the top right corner.
+
+Why? Not all huds support those counters and prefer to only use the overlay map.
 
 * Kill/secrets/items count
 * Timer with par time
 * Level names(s)
 * Counts change color when full, timer changes colors as it approaches par time
-
-
-#### Todo
-* Make everything configurable (colors included)
 
 
 Dev

@@ -1,3 +1,9 @@
-user int hide_tracker     	= 0;
-user color tag_color     	= "FF 00 00";
-user color data_color     	= "00 FF 00";
+user int tr_hide_all     	= 0;
+user int tr_show_secret		= 1;
+user int tr_show_item		= 1;
+user int tr_show_monster	= 1;
+user int tr_color_counts	= 1;
+user int tr_show_time		= 1;
+user int tr_show_par_time	= 1;
+user int tr_color_time		= 1;
+user int tr_show_level		= 1;
