@@ -9,6 +9,8 @@
 #define SHOW_PAR_TIME_CVAR "tr_show_par_time"
 #define COLOR_TIME_CVAR "tr_color_time" // Color the time according to how close it is to par
 #define SHOW_LEVEL_CVAR "tr_show_level"
+#define X_POS_CVAR "tr_x_pos"
+#define Y_POS_CVAR "tr_y_pos"
 
 
 function int pad(int time) {
@@ -22,6 +24,9 @@ function int pad(int time) {
 }
 
 function int timeColor(int time, int par) {
+  if(par <= 0) {
+    return "d"; // Impossible par, just leave green
+  }
   int diff = par - time;
   int percent = (diff*100) / par;
   if(diff < 0) {
@@ -116,7 +121,7 @@ script 400 ENTER clientside
     }
 
     if(!getCVar(HIDE_TRACKER_CVAR)) {
-      HudMessage(l:fullMessage; HUDMSG_PLAIN | HUDMSG_NOTWITHFULLMAP, 400, CR_WHITE, 1.0, 0.0, 1873);  
+      HudMessage(l:fullMessage; HUDMSG_PLAIN | HUDMSG_NOTWITHFULLMAP, 400, CR_WHITE, GetCVar(X_POS_CVAR), GetCVar(Y_POS_CVAR), 1873);  
     }
     Delay(1);
   }
