@@ -26,5 +26,10 @@ Dev
 
 Changelog
 ---------
+##### v1.1.0
+* XY position options
+* Fix par time of 0 bug
+* Default to exclude par time
+
 ##### v1.0.0
 * Initial version
