@@ -4,6 +4,8 @@ For ZDoom ports.
 
 Provides a configurable kill/secrets/items counter;
 
+![Tracker](tracker.png)
+
 Why? Not all huds support these counters and I don't like using the opaque map.
 
 * Kill/secrets/items count
