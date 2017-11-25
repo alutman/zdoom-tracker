@@ -1,0 +1,28 @@
+AddOptionMenu "OptionsMenu"
+{
+	StaticText " "
+	Submenu "Z Tracker", "TrackerOptions"
+}
+
+OptionMenu "TrackerOptions"
+{
+	Title "Z Tracker Options"
+	StaticText "Level Info"
+	Option "Enabled", "tr_li_enabled", "onoff"
+	Option "Show Secrets", "tr_li_show_secret", "onoff"
+	Option "Show Items", "tr_li_show_item", "onoff"
+	Option "Show Monstgers", "tr_li_show_monster", "onoff"
+	Option "Colorize counts", "t_lir_color_counts", "onoff"
+	Option "Show Time", "tr_li_show_time", "onoff"
+	Option "Show Par Time", "tr_li_show_par_time", "onoff"
+	Option "Colorize Time", "tr_li_color_time", "onoff"
+	Option "Show Level", "tr_li_show_level", "onoff"
+	Slider "X Position", "tr_li_x_pos", 0.00, 1.00, 0.05, 2
+	Slider "Y Position", "tr_li_y_pos", 0.00, 1.00, 0.05, 2
+	StaticText ""
+	StaticText "Powerup Timer"
+	Option "Enabled", "tr_pt_enabled", "onoff"
+	Slider "X Position", "tr_pt_x_pos", 0.00, 1.00, 0.05, 2
+	Slider "Y Position", "tr_pt_y_pos", 0.00, 1.00, 0.05, 2
+
+}

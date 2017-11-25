@@ -3,18 +3,22 @@
 
 #define SCREENBLOCKS_CVAR "screenblocks"
 #define SCREENBLOCKS_HIDE_SIZE 12
-#define HIDE_TRACKER_CVAR "tr_hide_all"
-#define SHOW_SECRET_CVAR "tr_show_secret"
-#define SHOW_ITEM_CVAR "tr_show_item"
-#define SHOW_MONSTER_CVAR "tr_show_monster"
-#define COLOR_COUNTS_CVAR "tr_color_counts" // Color counts differently when complete
-#define SHOW_TIME_CVAR "tr_show_time"
-#define SHOW_PAR_TIME_CVAR "tr_show_par_time"
-#define COLOR_TIME_CVAR "tr_color_time" // Color the time according to how close it is to par
-#define SHOW_LEVEL_CVAR "tr_show_level"
-#define X_POS_CVAR "tr_x_pos"
-#define Y_POS_CVAR "tr_y_pos"
 
+#define TRACKER_ENABLED_CVAR "tr_li_enabled"
+#define SHOW_SECRET_CVAR "tr_li_show_secret"
+#define SHOW_ITEM_CVAR "tr_li_show_item"
+#define SHOW_MONSTER_CVAR "tr_li_show_monster"
+#define COLOR_COUNTS_CVAR "tr_li_color_counts" // Color counts differently when complete
+#define SHOW_TIME_CVAR "tr_li_show_time"
+#define SHOW_PAR_TIME_CVAR "tr_li_show_par_time"
+#define COLOR_TIME_CVAR "tr_li_color_time" // Color the time according to how close it is to par
+#define SHOW_LEVEL_CVAR "tr_li_show_level"
+#define X_POS_CVAR "tr_li_x_pos"
+#define Y_POS_CVAR "tr_li_y_pos"
+
+#define POWERUP_TIMER_CVAR "tr_pt_enabled"
+#define POWERUP_X_POS_CVAR"tr_pt_x_pos"
+#define POWERUP_Y_POS_CVAR "tr_pt_y_pos"
 
 function int pad(int time) {
   if(time < 10) {
@@ -61,6 +65,30 @@ function int timeToStr(int time) {
     return StrParam(s:pad(mins), s:":", s:pad(secs));
   }
   return 0;
+}
+
+
+function void displayPowerupDuration(void) {
+  int fullMessage = "";
+  int radSuitTicks = GetActorPowerupTics(ActivatorTID(), "PowerIronFeet");
+  if(radSuitTicks > 0) {
+    fullMessage = StrParam(s:fullMessage, s:"\cd", d:radSuitTicks/35, s:"\n");  
+  }
+  int nvTicks = GetActorPowerupTics(ActivatorTID(), "PowerLightAmp");
+  if(nvTicks > 0) {
+    fullMessage = StrParam(s:fullMessage, s:"\cj", d:nvTicks/35, s:"\n");  
+  }
+  int godTicks = GetActorPowerupTics(ActivatorTID(), "PowerInvulnerable");
+  if(godTicks > 0) {
+    fullMessage = StrParam(s:fullMessage, s:"\cq", d:godTicks/35, s:"\n");  
+  }
+  int ghostTicks = GetActorPowerupTics(ActivatorTID(), "PowerInvisibility");
+  if(ghostTicks > 0) {
+    fullMessage = StrParam(s:fullMessage, s:"\cu", d:ghostTicks/35, s:"\n");  
+  }
+  SetFont("BIGFONT");
+  int padding = 0.005;
+  HudMessage(l:fullMessage; HUDMSG_PLAIN | HUDMSG_NOTWITHFULLMAP, 401, CR_WHITE, GetCVar(POWERUP_X_POS_CVAR)-padding, GetCVar(POWERUP_Y_POS_CVAR)-padding, 1873);  
 }
 
 function void displayStats(void) {
@@ -121,10 +149,10 @@ function void displayStats(void) {
   }
   // Pad the bottom of the message with empty space, just a little longer than 00:00 so the time doesn't move the whole message around
   fullMessage = StrParam(s:fullMessage, s:"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\x7f");
-  if(!getCVar(HIDE_TRACKER_CVAR)) {
-    int padding = 0.005;
-    HudMessage(l:fullMessage; HUDMSG_PLAIN | HUDMSG_NOTWITHFULLMAP, 400, CR_WHITE, GetCVar(X_POS_CVAR)-padding, GetCVar(Y_POS_CVAR)-padding, 1873);  
-  }
+
+  int padding = 0.005;
+  SetFont("SMALLFONT");
+  HudMessage(l:fullMessage; HUDMSG_PLAIN | HUDMSG_NOTWITHFULLMAP, 400, CR_WHITE, GetCVar(X_POS_CVAR)-padding, GetCVar(Y_POS_CVAR)-padding, 1873);  
 }
 bool running = false;
 script 400 ENTER clientside
@@ -133,7 +161,13 @@ script 400 ENTER clientside
     running = true;
     while(true) {
       if(GetCVar(SCREENBLOCKS_CVAR) != SCREENBLOCKS_HIDE_SIZE) {
-        displayStats();  
+        if(getCVar(TRACKER_ENABLED_CVAR)) {
+          displayStats();  
+        }
+        if(getCVar(POWERUP_TIMER_CVAR)) {
+          displayPowerupDuration();
+        }
+        
       }
       
       Delay(1);

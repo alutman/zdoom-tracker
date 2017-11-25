@@ -1,24 +1,25 @@
-tracker
+z tracker
 =======
 For ZDoom ports.
 
-Provides a configurable kill/secrets/items counter;
+Provides a configurable kill/secrets/items counter & powerup cooldown timers
 
 ![Tracker](tracker.png)
 
-Why? Not all huds support these counters and I don't like using the opaque map.
+Why? Not all huds support these counters but I still want the extra information
 
 * Kill/secrets/items count
 * Timer with par time
 * Level names(s)
 * Counts change color when full, timer changes colors as it approaches par time
+* Countdown timers for active powerups
 
-See CVARINFO.txt for a list of options to configure
+See [MENUDEF.txt](menudef.txt) for a list of options to configure
 
 Dev
 ---
 1. Compile `*.c` files with ACC
-2. Package up all txt files and acc files to a zip
+2. Package up all txt files and acc `.o` files to a zip
 3. Rename zip to .pk3
 4. Use like any doom addon
 
