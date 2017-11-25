@@ -2,7 +2,7 @@ z tracker
 =======
 For ZDoom ports.
 
-Provides a configurable kill/secrets/items counter & powerup cooldown timers
+Provides a configurable kill/secrets/items counter and a powerup cooldown timer.
 
 ![Tracker](tracker.png)
 
@@ -29,6 +29,10 @@ Dev
 
 Changelog
 ---------
+##### v1.2.0
+* Actual GUI menu for options
+* Powerup timer
+
 ##### v1.1.0
 * XY position options
 * Fix par time of 0 bug
