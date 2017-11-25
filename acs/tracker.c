@@ -1,5 +1,8 @@
 #library "tracker"
 #include "zcommon.acs"
+
+#define SCREENBLOCKS_CVAR "screenblocks"
+#define SCREENBLOCKS_HIDE_SIZE 12
 #define HIDE_TRACKER_CVAR "tr_hide_all"
 #define SHOW_SECRET_CVAR "tr_show_secret"
 #define SHOW_ITEM_CVAR "tr_show_item"
@@ -116,9 +119,11 @@ function void displayStats(void) {
     fullMessage = StrParam(s:fullMessage, s:"\cu", n:PRINTNAME_LEVEL, s:"\n");
     fullMessage = StrParam(s:fullMessage, s:"\cc", n:PRINTNAME_LEVELNAME, s:"\n");
   }
-
+  // Pad the bottom of the message with empty space, just a little longer than 00:00 so the time doesn't move the whole message around
+  fullMessage = StrParam(s:fullMessage, s:"\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\x7f");
   if(!getCVar(HIDE_TRACKER_CVAR)) {
-    HudMessage(l:fullMessage; HUDMSG_PLAIN | HUDMSG_NOTWITHFULLMAP, 400, CR_WHITE, GetCVar(X_POS_CVAR), GetCVar(Y_POS_CVAR), 1873);  
+    int padding = 0.005;
+    HudMessage(l:fullMessage; HUDMSG_PLAIN | HUDMSG_NOTWITHFULLMAP, 400, CR_WHITE, GetCVar(X_POS_CVAR)-padding, GetCVar(Y_POS_CVAR)-padding, 1873);  
   }
 }
 bool running = false;
@@ -127,7 +132,10 @@ script 400 ENTER clientside
   if(!running) {
     running = true;
     while(true) {
-      displayStats();
+      if(GetCVar(SCREENBLOCKS_CVAR) != SCREENBLOCKS_HIDE_SIZE) {
+        displayStats();  
+      }
+      
       Delay(1);
     }
   }
