@@ -1,4 +1,5 @@
 user int tr_li_enabled     		= 1;
+user int tr_li_automap     		= 0;
 user int tr_li_show_secret		= 1;
 user int tr_li_show_item		= 1;
 user int tr_li_show_monster		= 1;
@@ -7,7 +8,7 @@ user int tr_li_show_time		= 1;
 user int tr_li_show_par_time	= 0;
 user int tr_li_color_time		= 1;
 user int tr_li_show_level		= 1;
-user float tr_li_x_pos			= 1.0;
+user float tr_li_x_pos			= 0.9;
 user float tr_li_y_pos			= 0.0;
 user int tr_pt_enabled			= 1;
 user float tr_pt_x_pos			= 0.5;

@@ -1,1 +1,4 @@
 *.o
+*.zip
+*.pk3
+releases/
