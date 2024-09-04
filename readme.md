@@ -27,11 +27,13 @@ Dev
 2. Load zip in to gzdoom
 
 #### Misc
-* Compiled with ACC 1.56 win
 * Tested with GZDoom 4.12.2 on windows
 
 Changelog
 ---------
+##### v2.0.1
+* Set minimum zscript version to 3.0
+
 ##### v2.0.0
 * Convert from ACS to zscript
 
